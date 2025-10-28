@@ -901,10 +901,35 @@ public class peminjaman extends javax.swing.JPanel {
     }//GEN-LAST:event_bbatalActionPerformed
         //method table siswa
     private void bcarisiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcarisiswaActionPerformed
-        pn_main.removeAll();
-        pn_main.add(pn_datasiswa);
-        pn_main.repaint();
-        pn_main.revalidate();
+        String idSiswa = txtidsiswa.getText().trim();
+        if(idSiswa.isEmpty()){
+            pn_main.removeAll();
+            pn_main.add(pn_datasiswa);
+            pn_main.repaint();
+            pn_main.revalidate();
+        }else{
+            try{
+                String sql = "SELECT * FROM datasiswa WHERE id_siswa = ?";
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1,idSiswa);
+                ResultSet hasil = stat.executeQuery();
+                if(hasil.next()){
+                    txtnmsiswa.setText(hasil.getString("nm_siswa"));
+                    txtkelas.setText(hasil.getString("kelas"));
+                    txtjenis.setText(hasil.getString("jenis"));
+                    txttelp.setText(hasil.getString("telepon"));
+                    txtalamat.setText(hasil.getString("alamat"));
+                }else{
+                    JOptionPane.showMessageDialog(this, "data siswa dengan id "+ idSiswa+"tidak ditemukan");
+                }
+                hasil.close();
+                stat.close();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this, "terjadi kesalahan"+e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
     }//GEN-LAST:event_bcarisiswaActionPerformed
     private void tablesiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablesiswaMouseClicked
         int tabledatasiswa = tablesiswa.getSelectedRow();
