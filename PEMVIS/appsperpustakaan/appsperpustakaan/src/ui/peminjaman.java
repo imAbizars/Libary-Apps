@@ -155,16 +155,16 @@ public class peminjaman extends javax.swing.JPanel {
         txtidbuku = new tools.JTextFieldRounded();
         bcaribuku = new tools.MyButton();
         jLabel21 = new javax.swing.JLabel();
-        txtnmbuku = new tools.JTextFieldRounded();
         jLabel23 = new javax.swing.JLabel();
-        txtpenerbit = new tools.JTextFieldRounded();
-        txttahun = new tools.JTextFieldRounded();
         jLabel24 = new javax.swing.JLabel();
         btambah = new tools.MyButton();
-        txttebal = new tools.JTextFieldRounded();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         txtqty = new tools.JTextFieldRounded();
+        txtnmbuku = new javax.swing.JLabel();
+        txtpenerbit = new javax.swing.JLabel();
+        txttahun = new javax.swing.JLabel();
+        txttebal = new javax.swing.JLabel();
         panelRound3 = new test.PanelRound();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -241,7 +241,7 @@ public class peminjaman extends javax.swing.JPanel {
         panelRound4.setRoundTopLeft(20);
         panelRound4.setRoundTopRight(20);
 
-        jLabel19.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel19.setFont(new java.awt.Font("SansSerif", 1, 19)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setText("Data Buku");
 
@@ -266,23 +266,11 @@ public class peminjaman extends javax.swing.JPanel {
 
         jLabel21.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setText("Nama Buku      :");
-
-        txtnmbuku.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnmbukuActionPerformed(evt);
-            }
-        });
+        jLabel21.setText("Nama Buku       :");
 
         jLabel23.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("Penerbit           :");
-
-        txttahun.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txttahunActionPerformed(evt);
-            }
-        });
+        jLabel23.setText("Penerbit            :");
 
         jLabel24.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
@@ -317,12 +305,28 @@ public class peminjaman extends javax.swing.JPanel {
             }
         });
 
+        txtnmbuku.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        txtnmbuku.setForeground(new java.awt.Color(255, 255, 255));
+        txtnmbuku.setText("jLabel25");
+
+        txtpenerbit.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        txtpenerbit.setForeground(new java.awt.Color(255, 255, 255));
+        txtpenerbit.setText("jLabel25");
+
+        txttahun.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        txttahun.setForeground(new java.awt.Color(255, 255, 255));
+        txttahun.setText("jLabel25");
+
+        txttebal.setFont(new java.awt.Font("SansSerif", 1, 13)); // NOI18N
+        txttebal.setForeground(new java.awt.Color(255, 255, 255));
+        txttebal.setText("jLabel25");
+
         javax.swing.GroupLayout panelRound4Layout = new javax.swing.GroupLayout(panelRound4);
         panelRound4.setLayout(panelRound4Layout);
         panelRound4Layout.setHorizontalGroup(
             panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound4Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
+                .addContainerGap(46, Short.MAX_VALUE)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -334,27 +338,26 @@ public class peminjaman extends javax.swing.JPanel {
                                 .addGap(56, 56, 56))
                             .addGroup(panelRound4Layout.createSequentialGroup()
                                 .addGap(1, 1, 1)
-                                .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel26)
                                     .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel20)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel20)
+                                            .addComponent(jLabel27))
+                                        .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel24)
-                                        .addComponent(jLabel26)
-                                        .addComponent(jLabel27))
-                                    .addGroup(panelRound4Layout.createSequentialGroup()
-                                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(2, 2, 2)))
-                                .addGap(30, 30, 30)))
+                                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(39, 39, 39)))
                         .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelRound4Layout.createSequentialGroup()
                                 .addComponent(txtidbuku, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(bcaribuku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(txttahun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtqty, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+                            .addComponent(txtnmbuku, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtpenerbit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtnmbuku, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txttebal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtqty, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txttahun, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txttebal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(38, 38, 38))
         );
         panelRound4Layout.setVerticalGroup(
@@ -370,24 +373,24 @@ public class peminjaman extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addComponent(txtnmbuku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(txtnmbuku))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(txtpenerbit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(txtpenerbit)
+                    .addComponent(jLabel23))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(txttahun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(txttahun)
+                    .addComponent(jLabel24))
+                .addGap(21, 21, 21)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
-                    .addComponent(txttebal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(txttebal))
+                .addGap(112, 112, 112)
                 .addGroup(panelRound4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel27)
                     .addComponent(txtqty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(btambah, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -980,10 +983,39 @@ public class peminjaman extends javax.swing.JPanel {
     
 // method table buku        
     private void bcaribukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcaribukuActionPerformed
-        pn_main.removeAll();
-        pn_main.add(pn_databuku);
-        pn_main.repaint();
-        pn_main.revalidate();
+        String idBuku = txtidbuku.getText().trim();
+        if(idBuku.isEmpty()){
+           pn_main.removeAll();
+           pn_main.add(pn_databuku);
+           pn_main.repaint();
+           pn_main.revalidate(); 
+        }else{
+            try{
+                String sql = "SELECT * FROM databuku WHERE id_buku = ?";
+                PreparedStatement stat = conn.prepareStatement(sql);
+                stat.setString(1, idBuku);
+                ResultSet hasil = stat.executeQuery();
+                if(hasil.next()){
+                    txtnmbuku.setText(hasil.getString("judul_buku"));
+                    txtpenerbit.setText(hasil.getString("nama_penulis"));
+                    txttahun.setText(hasil.getString("tahun_terbit"));
+                    txttebal.setText(hasil.getString("tebal_buku"));
+                }else{
+                    JOptionPane.showMessageDialog(this,"data buku dengan id " + idBuku+ " tidak ditemukan" );
+                    txtidbuku.setText("");
+                    txtnmbuku.setText("");
+                    txtpenerbit.setText("");
+                    txttahun.setText("");
+                    txttebal.setText("");
+                }
+                hasil.close();
+                stat.close();
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(this,"terjadi kesalahan"+e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        
     }//GEN-LAST:event_bcaribukuActionPerformed
 
     private void tablebukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablebukuMouseClicked
@@ -1123,17 +1155,9 @@ public class peminjaman extends javax.swing.JPanel {
         pn_main.revalidate();
     }//GEN-LAST:event_bkembaliActionPerformed
 
-    private void txttahunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttahunActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txttahunActionPerformed
-
     private void txtqtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtqtyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtqtyActionPerformed
-
-    private void txtnmbukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnmbukuActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtnmbukuActionPerformed
     protected void datatablebuku(){
         Object [] Baris = {"Id Buku","Nama Buku","Penulis","Tahun Terbit","Tebal Halaman"};
         tabmode2 = new DefaultTableModel(null,Baris);
@@ -1225,12 +1249,12 @@ public class peminjaman extends javax.swing.JPanel {
     private tools.JTextFieldRounded txtidsiswa;
     private javax.swing.JLabel txtjenis;
     private javax.swing.JLabel txtkelas;
-    private tools.JTextFieldRounded txtnmbuku;
+    private javax.swing.JLabel txtnmbuku;
     private javax.swing.JLabel txtnmsiswa;
-    private tools.JTextFieldRounded txtpenerbit;
+    private javax.swing.JLabel txtpenerbit;
     private tools.JTextFieldRounded txtqty;
-    private tools.JTextFieldRounded txttahun;
-    private tools.JTextFieldRounded txttebal;
+    private javax.swing.JLabel txttahun;
+    private javax.swing.JLabel txttebal;
     private javax.swing.JLabel txttelp;
     private tools.JTextFieldRounded txttotal;
     // End of variables declaration//GEN-END:variables
