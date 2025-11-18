@@ -66,7 +66,7 @@ public class JScrollPaneMod extends JScrollPane {
             Graphics2D g2 = (Graphics2D) g.create();
 
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
-            g2.setPaint(new Color(120, 120, 120, 200));
+            g2.setPaint(new Color(140, 140, 140, 200));
 
             // Thumb persegi panjang
             g2.fillRect(thumbBounds.x, thumbBounds.y, thumbBounds.width, thumbBounds.height);
