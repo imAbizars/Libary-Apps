@@ -26,7 +26,7 @@ public class pengembalian extends javax.swing.JPanel {
     
     
     protected void Aktif(){
-        tglkembali.setDate(new java.util.Date());
+        tgalkembali.setDate(new java.util.Date());
     }
         
     protected void AutoNumber(){
@@ -63,15 +63,15 @@ public class pengembalian extends javax.swing.JPanel {
         };
         tabmode = new DefaultTableModel(null,kolom);
         String caridata = txtcaripinjam.getText();
-        try{
+        try{ 
             String sql =
-        "SELECT p.id_peminjaman, p.tgl_pinjam, p.id_siswa, p.nama_siswa, " +
+        "SELECT p.id_peminjaman, p.tgl_pinjam, p.id_siswa, p.nama_siswa, p.tgl_kembali, " +
         "d.id_buku, d.nama_buku, d.penerbit " +
         "FROM peminjaman p " +
         "JOIN detail_peminjaman d ON p.id_peminjaman = d.id_peminjaman " +
-        "WHERE P.id_peminjaman LIKE '%" + caridata + "%'" + 
-        "OR p.nama_siswa LIKE '%" + caridata + "%'" + 
-        "OR p.id_siswa LIKE '%" + caridata + "%'" +
+        "WHERE P.id_peminjaman LIKE '%" + caridata + "%' " + 
+        "OR p.nama_siswa LIKE '%" + caridata + "%' " + 
+        "OR p.id_siswa LIKE '%" + caridata + "%' " +
         "ORDER BY p.id_peminjaman ASC";
             
             Statement stat = conn.createStatement();
@@ -81,6 +81,7 @@ public class pengembalian extends javax.swing.JPanel {
                 tabmode.addRow(new Object[]{
                     hasil.getString("id_peminjaman"),
                     hasil.getDate("tgl_pinjam"),
+                    hasil.getDate("tgl_kembali"),
                     hasil.getString("id_siswa"),
                     hasil.getString("nama_siswa"),
                     hasil.getString("id_buku"),
@@ -93,6 +94,37 @@ public class pengembalian extends javax.swing.JPanel {
             System.out.println("data gagal di panggil : " + e);
         }
         
+    }
+    
+    private Date ambilTanggalPinjam(String idPinjam){
+         try {
+        String sql = "SELECT tgl_kembali FROM peminjaman WHERE id_peminjaman=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, idPinjam);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getDate("tgl_kembali");  
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+    }
+    
+    private int hitungDenda(Date tglkembali,Date tgldikembalikan){
+        long selisih = tgldikembalikan.getTime() - tglkembali.getTime();
+
+        // konversi selisih ke hari
+        long hariTelat = selisih / (1000 * 60 * 60 * 24);
+
+        if (hariTelat <= 0) {
+            return 0; // tidak telat, denda 0
+        }
+
+        // hari pertama: 3000
+        // hari selanjutnya: +1000
+        return 3000 + (int)((hariTelat - 1) * 1000);
     }
     
     
@@ -112,7 +144,7 @@ public class pengembalian extends javax.swing.JPanel {
         pn_view = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelpinjam = new javax.swing.JTable();
-        tglkembali = new com.toedter.calendar.JDateChooser();
+        tgalkembali = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         txtcaripinjam = new tools.JTextFieldRounded();
         bcaridata = new tools.MyButton();
@@ -175,7 +207,7 @@ public class pengembalian extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tabelpinjam);
 
-        tglkembali.setDateFormatString("dd-MM-yyyy");
+        tgalkembali.setDateFormatString("dd-MM-yyyy");
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel1.setText("Tanggal Pengembalian :");
@@ -437,7 +469,7 @@ public class pengembalian extends javax.swing.JPanel {
                             .addGroup(pn_viewLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(tglkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(tgalkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(363, 363, 363)
                         .addGroup(pn_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtcaripinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -459,7 +491,7 @@ public class pengembalian extends javax.swing.JPanel {
                     .addGroup(pn_viewLayout.createSequentialGroup()
                         .addGroup(pn_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tglkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tgalkembali, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
@@ -560,14 +592,22 @@ public class pengembalian extends javax.swing.JPanel {
 
     private void tabelpinjamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelpinjamMouseClicked
         int row = tabelpinjam.getSelectedRow();
-
-        jLabel3.setText(tabelpinjam.getValueAt(row,0).toString());
+        if (row == -1 )return;
+        
+        String idPinjam = tabelpinjam.getValueAt(row, 0).toString();
+        Date tglkembali = ambilTanggalPinjam(idPinjam);
+        Date tanggaldikembalikan = tgalkembali.getDate();
+        
+        int denda = hitungDenda(tglkembali, tanggaldikembalikan);
+                
+        jLabel3.setText(idPinjam);
         jLabel17.setText(tabelpinjam.getValueAt(row,1).toString());
         jLabel18.setText(tabelpinjam.getValueAt(row,2).toString());
         jLabel20.setText(tabelpinjam.getValueAt(row,3).toString());
         jLabel6.setText(tabelpinjam.getValueAt(row,4).toString());
         jLabel7.setText(tabelpinjam.getValueAt(row,5).toString());
         jLabel8.setText(tabelpinjam.getValueAt(row,6).toString());
+        jLabel4.setText("Rp " + denda);
     }//GEN-LAST:event_tabelpinjamMouseClicked
     
 
@@ -616,7 +656,7 @@ public class pengembalian extends javax.swing.JPanel {
     private javax.swing.JScrollPane pn_scrollview;
     private javax.swing.JPanel pn_view;
     private javax.swing.JTable tabelpinjam;
-    private com.toedter.calendar.JDateChooser tglkembali;
+    private com.toedter.calendar.JDateChooser tgalkembali;
     private tools.JTextFieldRounded txtcaripinjam;
     // End of variables declaration//GEN-END:variables
 }
