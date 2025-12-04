@@ -22,6 +22,7 @@ public class pengembalian extends javax.swing.JPanel {
         Aktif();
         tablePeminjaman();
         AutoNumber();
+        
     }
     
     
@@ -150,7 +151,7 @@ public class pengembalian extends javax.swing.JPanel {
         long hariTelat = selisih / (1000 * 60 * 60 * 24);
 
         if (hariTelat <= 0) {
-            return 0; // tidak telat, denda 0
+            return 0; 
         }
 
         // hari pertama: 3000
@@ -233,11 +234,9 @@ public class pengembalian extends javax.swing.JPanel {
         int row = tablekembali.getSelectedRow();
         if(row == -1) return;
 
-        // denda awal (keterlambatan)
         int dendaAwal = Integer.parseInt(tabmode2.getValueAt(row, 7).toString());
 
-        // sebelum tambah denda kondisi, hilangkan denda kondisi sebelumnya
-        // agar tidak double
+       
         String kondisiSebelumnya = tabmode2.getValueAt(row, 8).toString();
 
         if(kondisiSebelumnya.equals("rusak")){
@@ -246,7 +245,6 @@ public class pengembalian extends javax.swing.JPanel {
             dendaAwal -= 10000;
         }
 
-        // kondisi baru
         String kondisiBaru = "bagus";
 
         if(rdrusak.isSelected()){
@@ -257,7 +255,6 @@ public class pengembalian extends javax.swing.JPanel {
             kondisiBaru = "hilang";
         }
 
-        // Update ke tabel
         tabmode2.setValueAt(dendaAwal, row, 7);  
         tabmode2.setValueAt(kondisiBaru, row, 8);
 
@@ -273,6 +270,7 @@ public class pengembalian extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         pn_main = new javax.swing.JPanel();
         pn_view = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -300,7 +298,7 @@ public class pengembalian extends javax.swing.JPanel {
         bsimpan = new tools.MyButton();
         bbatal = new tools.MyButton();
         jLabel14 = new javax.swing.JLabel();
-        bbatal1 = new tools.MyButton();
+        bbayar = new tools.MyButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -388,7 +386,7 @@ public class pengembalian extends javax.swing.JPanel {
                         .addComponent(txtcaripinjam, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(6, 6, 6)
                         .addComponent(bcaridata, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
         pn_viewLayout.setVerticalGroup(
             pn_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,13 +402,13 @@ public class pengembalian extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pn_viewLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(pn_viewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtcaripinjam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bcaridata, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(658, Short.MAX_VALUE))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
 
         pn_main.add(pn_view, "card2");
@@ -442,6 +440,7 @@ public class pengembalian extends javax.swing.JPanel {
         jLabel25.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel25.setText("Kondisi Buku               :");
 
+        buttonGroup1.add(rdbagus);
         rdbagus.setText("Bagus");
         rdbagus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -449,6 +448,7 @@ public class pengembalian extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(rdrusak);
         rdrusak.setText("Rusak");
         rdrusak.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -456,6 +456,7 @@ public class pengembalian extends javax.swing.JPanel {
             }
         });
 
+        buttonGroup1.add(rdhilang);
         rdhilang.setText("Hilang");
         rdhilang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -504,18 +505,18 @@ public class pengembalian extends javax.swing.JPanel {
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-health-graph-30.png"))); // NOI18N
         jLabel14.setText("Form Pengembalian Buku");
 
-        bbatal1.setBackground(new java.awt.Color(51, 153, 255));
-        bbatal1.setForeground(new java.awt.Color(255, 255, 255));
-        bbatal1.setText("Batal");
-        bbatal1.setBorderColor(new java.awt.Color(51, 153, 255));
-        bbatal1.setColor(new java.awt.Color(51, 153, 255));
-        bbatal1.setColorClick(new java.awt.Color(101, 178, 255));
-        bbatal1.setColorOver(new java.awt.Color(101, 178, 255));
-        bbatal1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        bbatal1.setRadius(20);
-        bbatal1.addActionListener(new java.awt.event.ActionListener() {
+        bbayar.setBackground(new java.awt.Color(51, 153, 255));
+        bbayar.setForeground(new java.awt.Color(255, 255, 255));
+        bbayar.setText("Bayar");
+        bbayar.setBorderColor(new java.awt.Color(51, 153, 255));
+        bbayar.setColor(new java.awt.Color(51, 153, 255));
+        bbayar.setColorClick(new java.awt.Color(101, 178, 255));
+        bbayar.setColorOver(new java.awt.Color(101, 178, 255));
+        bbayar.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        bbayar.setRadius(20);
+        bbayar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bbatal1ActionPerformed(evt);
+                bbayarActionPerformed(evt);
             }
         });
 
@@ -629,12 +630,12 @@ public class pengembalian extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(347, 347, 347)
-                                .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(pn_kembaliLayout.createSequentialGroup()
                                         .addComponent(jLabel26)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(bbatal1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(bbayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(77, 77, 77))))
         );
         pn_kembaliLayout.setVerticalGroup(
@@ -652,10 +653,10 @@ public class pengembalian extends javax.swing.JPanel {
                     .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bbatal1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bbayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(27, 27, 27)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pn_kembaliLayout.createSequentialGroup()
                         .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -675,7 +676,7 @@ public class pengembalian extends javax.swing.JPanel {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(413, Short.MAX_VALUE))
+                .addContainerGap(426, Short.MAX_VALUE))
         );
 
         pn_main.add(pn_kembali, "card3");
@@ -690,7 +691,6 @@ public class pengembalian extends javax.swing.JPanel {
         }
 
         try {
-            // Ambil tanggal dan validasi
             Date tgl = tgalkembali.getDate();
             if (tgl == null) {
                 JOptionPane.showMessageDialog(null, "Tanggal pengembalian belum diisi.");
@@ -698,17 +698,14 @@ public class pengembalian extends javax.swing.JPanel {
             }
             java.sql.Date sqlTgl = new java.sql.Date(tgl.getTime());
 
-            // Ambil total denda dari label -> ekstrak angka saja
-            String raw = jLabel4.getText(); // format: "Rp 123000"
+            String raw = jLabel4.getText(); 
             String digits = raw.replaceAll("[^0-9]", "");
             int totalDenda = digits.isEmpty() ? 0 : Integer.parseInt(digits);
 
             String idPengembalian = jLabel33.getText();
-
-            // Mulai transaksi
+            String deskripsfisik = jTextArea1.getText();
             conn.setAutoCommit(false);
 
-            // INSERT HEADER
             String sqlHeader = "INSERT INTO pengembalian (id, id_siswa, nama_siswa, tgl_kembali, total_denda) VALUES (?,?,?,?,?)";
             PreparedStatement pstHeader = conn.prepareStatement(sqlHeader);
 
@@ -723,27 +720,26 @@ public class pengembalian extends javax.swing.JPanel {
             pstHeader.executeUpdate();
 
             // INSERT DETAIL
-            String sqlDetail = "INSERT INTO detail_pengembalian (id, id_buku, nama_buku, kondisi, denda, id_pengembalian) VALUES (?,?,?,?,?,?)";
+            String sqlDetail = "INSERT INTO detail_pengembalian (id, id_buku, nama_buku, kondisi, deskripsifisik, denda, id_pengembalian) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pstDetail = conn.prepareStatement(sqlDetail);
 
             for(int i = 0; i < tabmode2.getRowCount(); i++) {
                 String idPinjam = tabmode2.getValueAt(i, 0).toString();
                 String idBuku   = tabmode2.getValueAt(i, 4).toString();
 
-                // gunakan autoDetailPerPinjam jika ingin cek last id di DB:
-                // String idDetail = autoDetailPerPinjam(idPengembalian);
-                // atau simple incremental seperti ini:
+                
                 String idDetail = idPengembalian + "-DT" + String.format("%03d", i+1);
 
                 pstDetail.setString(1, idDetail);
                 pstDetail.setString(2, idBuku);
                 pstDetail.setString(3, tabmode2.getValueAt(i, 5).toString()); // nama buku
                 pstDetail.setString(4, tabmode2.getValueAt(i, 8).toString()); // kondisi
-                pstDetail.setInt(5, Integer.parseInt(tabmode2.getValueAt(i, 7).toString())); // denda
-                pstDetail.setString(6, idPengembalian);
+                pstDetail.setString(5,deskripsfisik);
+                pstDetail.setInt(6, Integer.parseInt(tabmode2.getValueAt(i, 7).toString())); // denda
+                pstDetail.setString(7, idPengembalian);
                 pstDetail.executeUpdate();
 
-                // HAPUS DETAIL PEMINJAMAN dan cek master
+               
                 hapusDetail(idPinjam, idBuku);
                 if(!checkDetail(idPinjam)){
                     hapusMaster(idPinjam);
@@ -796,9 +792,45 @@ public class pengembalian extends javax.swing.JPanel {
         pn_main.revalidate();
     }//GEN-LAST:event_tabelpinjamMouseClicked
 
-    private void bbatal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatal1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bbatal1ActionPerformed
+    private void bbayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbayarActionPerformed
+        String totalStr = jLabel4.getText().replaceAll("[^0-9]", "");
+        int totalDenda = Integer.parseInt(totalStr);
+
+        // Tampilkan input popup
+        String input = JOptionPane.showInputDialog(this, 
+                        "Masukkan jumlah bayar:");
+
+        // Jika user klik CANCEL
+        if(input == null) return;
+
+        // Cek input valid
+        int bayar;
+        try {
+            bayar = Integer.parseInt(input.trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Input harus angka!");
+            return;
+        }
+
+        if(bayar < totalDenda){
+            JOptionPane.showMessageDialog(this, 
+                    "Jumlah bayar kurang dari total denda!");
+            return;
+        }
+
+        // Hitung kembalian
+        int kembalian = bayar - totalDenda;
+
+        // Set total denda menjadi nol
+        jLabel4.setText("0");
+
+        // Tampilkan hasil
+        JOptionPane.showMessageDialog(this, 
+                "Pembayaran berhasil!\n" + 
+                "Total Denda : " + totalDenda + "\n" +
+                "Bayar       : " + bayar + "\n" +
+                "Kembalian   : " + kembalian);
+    }//GEN-LAST:event_bbayarActionPerformed
 
     private void rdbagusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbagusActionPerformed
         updateKondisiBuku();
@@ -807,9 +839,10 @@ public class pengembalian extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private tools.MyButton bbatal;
-    private tools.MyButton bbatal1;
+    private tools.MyButton bbayar;
     private tools.MyButton bcaridata;
     private tools.MyButton bsimpan;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
