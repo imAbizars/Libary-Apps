@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_Letter" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="55a21831-0d8e-4d58-bbf1-8dd809ea9a0e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Nama" class="java.lang.String"/>
+	<field name="Id" class="java.lang.String"/>
+	<field name="Id Buku" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{Nama}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement x="80" y="0" width="100" height="30" uuid="4d467362-bb7b-439b-8153-7014d5fd6268"/>
+					<textFieldExpression><![CDATA[$F{Nama}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="109" splitType="Stretch">
+			<staticText>
+				<reportElement x="-20" y="0" width="612" height="109" uuid="dd605bfa-6ae7-4250-86fc-5661ab74a7d0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[Bukti Peminjaman Buku Perpustakaan SMKN 22 JAKARTA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="-20" y="0" width="612" height="54" uuid="687ccf67-f421-4224-bf38-24771bb192e2"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<text><![CDATA[Harap kembalikan buku pinjaman sesuai dengan tanggal pengembalian]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="0" width="100" height="30" uuid="91d10566-824d-4442-9ede-a2170e1d4e00">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="754fcc4e-44d9-4842-9452-39db8d0c4181"/>
+				</reportElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="100" height="30" uuid="74ab52de-e358-4e00-8991-6b081f06ec74">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3df21e8-3f40-4c52-b0b4-d19045f92ab2"/>
+				</reportElement>
+				<text><![CDATA[Id Buku]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="0" width="100" height="30" uuid="416fca55-ef6d-4c8e-8b9e-4f8506342b91">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="754fcc4e-44d9-4842-9452-39db8d0c4181"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="946361b4-6cc1-43a6-bf40-b24d3ab375b7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3df21e8-3f40-4c52-b0b4-d19045f92ab2"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Id Buku}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

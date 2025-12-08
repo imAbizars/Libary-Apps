@@ -307,6 +307,7 @@ public class pengembalian extends javax.swing.JPanel {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        pn_bayar = new javax.swing.JPanel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -681,6 +682,19 @@ public class pengembalian extends javax.swing.JPanel {
 
         pn_main.add(pn_kembali, "card3");
 
+        javax.swing.GroupLayout pn_bayarLayout = new javax.swing.GroupLayout(pn_bayar);
+        pn_bayar.setLayout(pn_bayarLayout);
+        pn_bayarLayout.setHorizontalGroup(
+            pn_bayarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 285, Short.MAX_VALUE)
+        );
+        pn_bayarLayout.setVerticalGroup(
+            pn_bayarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 263, Short.MAX_VALUE)
+        );
+
+        pn_main.add(pn_bayar, "card4");
+
         add(pn_main, "card4");
     }// </editor-fold>//GEN-END:initComponents
 
@@ -865,6 +879,7 @@ public class pengembalian extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel pn_bayar;
     private javax.swing.JPanel pn_kembali;
     private javax.swing.JPanel pn_main;
     private javax.swing.JPanel pn_view;

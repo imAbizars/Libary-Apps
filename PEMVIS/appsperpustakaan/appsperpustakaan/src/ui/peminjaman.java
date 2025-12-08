@@ -4,11 +4,14 @@ import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import koneksi.koneksi;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 public class peminjaman extends javax.swing.JPanel {
@@ -41,8 +44,10 @@ public class peminjaman extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil");
         }
     }
+    
+
     protected void aktif(){
-        Object[] Baris = {"Id", "Tanggal Pinjam", "Id Siswa", "Nama", "Kelas", "No Telp",
+        Object[] Baris = {"Id Detail","Id Pinjam" ,"Tanggal Pinjam", "Id Siswa", "Nama", "Kelas", "No Telp",
         "Id Buku", "Nama Buku", "Penerbit", "Tahun", "Tebal", "Tanggal Kembali"};
         tabmode5 = new DefaultTableModel(null,Baris);
         jTable1.setModel(tabmode5);
@@ -63,77 +68,89 @@ public class peminjaman extends javax.swing.JPanel {
         txttebal.setText("");
     }
     protected void AutoNumber(){
-        try{
-            String sql = "SELECT id from datapeminjaman order by id asc";
+         try {
+            String sql = "SELECT id_peminjaman FROM peminjaman ORDER BY id_peminjaman DESC LIMIT 1";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-            jTextFieldRounded1.setText("IN0001");
-            while(rs.next()){
-                String id_nota = rs.getString("id").substring(2);
-                int AN = Integer.parseInt(id_nota)+1;
-                String Nol = "";
-                
-                if(AN<10){
-                    Nol = "000";
-                }else if (AN<100){
-                    Nol = "00";
-                }else if (AN < 1000){
-                    Nol = "0";
-                }else if(AN < 10000){
-                    Nol = "";
-                }
-                jTextFieldRounded1.setText("IN" + Nol + AN);
+
+            String nextID;
+
+            if (rs.next()) {
+                // Ambil angka di belakang PMJ
+                String lastID = rs.getString("id_peminjaman").substring(3); // contoh: 0007
+                int number = Integer.parseInt(lastID) + 1;                 
+
+                // Format ulang menjadi 4 digit
+                nextID = String.format("PMJ%04d", number);
+
+            } else {
+                // Jika tabel masih kosong
+                nextID = "PMJ0001";
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Auto Number Gagal" + e);
+
+            // Tampilkan ke textfield
+            jTextFieldRounded1.setText(nextID);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Auto Number Error: " + e.getMessage());
         }
-        txtidbuku.setText("");
-        txtnmbuku.setText("");
-        txtpenerbit.setText("");
-        txttahun.setText("");
-        txttebal.setText("");
+
     }
     
+    private String autoDetailPerPinjam(String idPinjam) {
+        int count = tabmode5.getRowCount() + 1;
+        return idPinjam + "-DT" + String.format("%03d", count);
+    }
     protected void tablepeminjaman() {
         Object[] Baris = {
-            "Id Pinjam", "Tanggal Pinjam", "Id Siswa", "Nama Siswa", 
-            "Id Buku", "Nama Buku", "Penerbit", "Tahun Terbit", "Tebal Halaman"
+            "ID Pinjam", "Tanggal Pinjam",
+            "ID Siswa", "Nama Siswa", "Kelas", "Telp",
+            "ID Buku", "Nama Buku", "Penerbit", "Tahun Terbit", "Tebal Halaman"
         };
+
         tabmode4 = new DefaultTableModel(null, Baris);
         String caridata = txtcaripinjam.getText();
 
         try {
-            String sql = "SELECT * FROM datapeminjaman " +
-                         "WHERE id LIKE '%" + caridata + "%' " +
-                         "OR nama_buku LIKE '%" + caridata + "%' " +
-                         "OR nama_siswa LIKE '%" + caridata + "%' " +
-                         "OR id_siswa LIKE '%" + caridata + "%' " +
-                         "ORDER BY id ASC";
+            String sql =
+                "SELECT p.id_peminjaman, p.tgl_pinjam, " +
+                "       s.id_siswa, s.nm_siswa, s.kelas, s.telepon, " +
+                "       b.id_buku, b.judul_buku, b.nama_penulis, b.tahun_terbit, b.tebal_buku " +
+                "FROM peminjaman p " +
+                "JOIN datasiswa s ON p.id_siswa = s.id_siswa " +
+                "JOIN detail_peminjaman d ON p.id_peminjaman = d.id_peminjaman " +
+                "JOIN databuku b ON d.id_buku = b.id_buku " +
+                "WHERE p.id_peminjaman LIKE '%" + caridata + "%' " +
+                "OR s.nm_siswa LIKE '%" + caridata + "%' " + 
+                "OR b.judul_buku LIKE '%" + caridata + "%' " +
+                "ORDER BY p.id_peminjaman ASC";
 
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
 
             while (hasil.next()) {
                 tabmode4.addRow(new Object[]{
-                    hasil.getString("id"),
+                    hasil.getString("id_peminjaman"),
                     hasil.getString("tgl_pinjam"),
                     hasil.getString("id_siswa"),
-                    hasil.getString("nama_siswa"),
+                    hasil.getString("nm_siswa"),
                     hasil.getString("kelas"),
-                    hasil.getString("telp"),
+                    hasil.getString("telepon"),
                     hasil.getString("id_buku"),
-                    hasil.getString("nama_buku"),
-                    hasil.getString("penerbit"),
+                    hasil.getString("judul_buku"),
+                    hasil.getString("nama_penulis"),
                     hasil.getString("tahun_terbit"),
-                    hasil.getString("tebal_buku"),
+                    hasil.getString("tebal_buku")
                 });
             }
+
             tablepeminjaman.setModel(tabmode4);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Data gagal ditampilkan: " + e.getMessage());
         }
     }
+
 
      
     @SuppressWarnings("unchecked")
@@ -210,7 +227,8 @@ public class peminjaman extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         bsimpan1 = new tools.MyButton();
-        bsimpan2 = new tools.MyButton();
+        bbatal1 = new tools.MyButton();
+        bhapus = new tools.MyButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1088, 734));
@@ -828,17 +846,31 @@ public class peminjaman extends javax.swing.JPanel {
             }
         });
 
-        bsimpan2.setForeground(new java.awt.Color(255, 255, 255));
-        bsimpan2.setText("Simpan");
-        bsimpan2.setBorderColor(new java.awt.Color(51, 153, 255));
-        bsimpan2.setColor(new java.awt.Color(51, 153, 255));
-        bsimpan2.setColorClick(new java.awt.Color(101, 178, 255));
-        bsimpan2.setColorOver(new java.awt.Color(101, 178, 255));
-        bsimpan2.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        bsimpan2.setRadius(20);
-        bsimpan2.addActionListener(new java.awt.event.ActionListener() {
+        bbatal1.setForeground(new java.awt.Color(255, 255, 255));
+        bbatal1.setText("Tambah");
+        bbatal1.setBorderColor(new java.awt.Color(51, 153, 255));
+        bbatal1.setColor(new java.awt.Color(51, 153, 255));
+        bbatal1.setColorClick(new java.awt.Color(101, 178, 255));
+        bbatal1.setColorOver(new java.awt.Color(101, 178, 255));
+        bbatal1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        bbatal1.setRadius(20);
+        bbatal1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bsimpan2ActionPerformed(evt);
+                bbatal1ActionPerformed(evt);
+            }
+        });
+
+        bhapus.setForeground(new java.awt.Color(255, 255, 255));
+        bhapus.setText("Hapus");
+        bhapus.setBorderColor(new java.awt.Color(51, 153, 255));
+        bhapus.setColor(new java.awt.Color(51, 153, 255));
+        bhapus.setColorClick(new java.awt.Color(101, 178, 255));
+        bhapus.setColorOver(new java.awt.Color(101, 178, 255));
+        bhapus.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        bhapus.setRadius(20);
+        bhapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bhapusActionPerformed(evt);
             }
         });
 
@@ -854,7 +886,9 @@ public class peminjaman extends javax.swing.JPanel {
                     .addGroup(pn_pinjamLayout.createSequentialGroup()
                         .addComponent(bsimpan1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bsimpan2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bbatal1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bhapus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
         pn_pinjamLayout.setVerticalGroup(
@@ -867,7 +901,8 @@ public class peminjaman extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addGroup(pn_pinjamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bsimpan1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bsimpan2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bbatal1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bhapus, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(367, Short.MAX_VALUE))
         );
 
@@ -877,30 +912,41 @@ public class peminjaman extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btambahActionPerformed
-        try{
-            String id = jTextFieldRounded1.getText();
-            java.util.Date date = tglpinjam.getDate();
-            java.sql.Date tanggalPinjam = new java.sql.Date(date.getTime());
-            String idsiswa = txtidsiswa.getText();
-            String nmsiswa = txtnmsiswa.getText();
-            String kelas = txtkelas.getText();
-            String notelp = txttelp.getText();
-            String idbuku = txtidbuku.getText();
-            String nmbuku = txtnmbuku.getText();
-            String penerbit = txtpenerbit.getText();
-            String tahunterbit = txttahun.getText();
-            String tebal = txttebal.getText();
-            java.util.Date kembali = tglpinjam1.getDate();
-            java.sql.Date tanggalkembali = new java.sql.Date(kembali.getTime());
-            tabmode5.addRow(new Object[]{id,tanggalPinjam,idsiswa,nmsiswa,kelas,notelp,idbuku,nmbuku,penerbit,tahunterbit,tebal,tanggalkembali});
-            jTable1.setModel(tabmode5);
-        }catch(Exception e){
-            System.err.println("Error : " + e);
+       try {
+        String idPinjam = jTextFieldRounded1.getText();
+
+        // ID detail di-generate dari jumlah row keranjang
+        String idDetail = autoDetailPerPinjam(idPinjam);
+
+        java.sql.Date tanggalPinjam = new java.sql.Date(tglpinjam.getDate().getTime());
+        java.sql.Date tanggalKembali = new java.sql.Date(tglpinjam1.getDate().getTime());
+
+        tabmode5.addRow(new Object[]{
+            idDetail,
+            idPinjam,
+            tanggalPinjam,
+            txtidsiswa.getText(),
+            txtnmsiswa.getText(),
+            txtkelas.getText(),
+            txttelp.getText(),
+            txtidbuku.getText(),
+            txtnmbuku.getText(),
+            txtpenerbit.getText(),
+            txttahun.getText(),
+            txttebal.getText(),
+            tanggalKembali
+        });
+
+        jTable1.setModel(tabmode5);
+
+    } catch (Exception e) {
+        System.err.println("Error : " + e);
     }
-        pn_main.removeAll();
-        pn_main.add(pn_pinjam);
-        pn_main.repaint();
-        pn_main.revalidate();
+
+    pn_main.removeAll();
+    pn_main.add(pn_pinjam);
+    pn_main.repaint();
+    pn_main.revalidate();
     }//GEN-LAST:event_btambahActionPerformed
 
     private void bbatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatalActionPerformed
@@ -1105,61 +1151,119 @@ public class peminjaman extends javax.swing.JPanel {
         pn_main.repaint();
         pn_main.revalidate();
     }//GEN-LAST:event_bkembaliActionPerformed
+    private void simpanMaster() throws SQLException {
+        String sql = "INSERT INTO peminjaman (id_peminjaman, tgl_pinjam, id_siswa, nama_siswa, kelas, telp, tgl_kembali) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement stat = conn.prepareStatement(sql);
+
+        stat.setString(1, jTextFieldRounded1.getText());
+        stat.setDate(2, new java.sql.Date(tglpinjam.getDate().getTime()));
+        stat.setString(3, txtidsiswa.getText());
+        stat.setString(4, txtnmsiswa.getText());
+        stat.setString(5, txtkelas.getText());
+        stat.setString(6, txttelp.getText());
+        stat.setDate(7, new java.sql.Date(tglpinjam1.getDate().getTime()));
+
+        stat.executeUpdate();
+    }
+    private void simpanDetail() throws SQLException {
+        String sql = "INSERT INTO detail_peminjaman "
+                   + "(id_detail, id_peminjaman, id_buku, nama_buku, penerbit, tahun_terbit, tebal_buku) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        int rowCount = jTable1.getRowCount();
+
+        for (int i = 0; i < rowCount; i++) {
+            PreparedStatement stat = conn.prepareStatement(sql);
+
+            stat.setString(1, jTable1.getValueAt(i, 0).toString()); // id_detail
+            stat.setString(2, jTable1.getValueAt(i, 1).toString()); // id_peminjaman
+            stat.setString(3, jTable1.getValueAt(i, 7).toString()); // id_buku
+            stat.setString(4, jTable1.getValueAt(i, 8).toString()); // nama_buku
+            stat.setString(5, jTable1.getValueAt(i, 9).toString()); // penerbit
+            stat.setString(6, jTable1.getValueAt(i,10).toString()); // tahun
+            stat.setString(7, jTable1.getValueAt(i,11).toString()); // tebal
+
+            stat.executeUpdate();
+        }
+    }
 
     private void bsimpan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpan1ActionPerformed
-        String zsql = "INSERT INTO datapeminjaman "
-            + "(id, tgl_pinjam,id_siswa, nama_siswa, kelas, telp,"
-            + "id_buku, nama_buku, penerbit, tahun_terbit, tebal_buku, tgl_kembali)"
-            + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-
         try {
-            int t = jTable1.getRowCount();
 
-            for (int i = 0; i < t; i++) {
-                PreparedStatement stat = conn.prepareStatement(zsql);
+            // 1. Simpan master (sekali)
+            simpanMaster();
 
-                String id = jTable1.getValueAt(i, 0).toString();
-                java.sql.Date tanggalPinjam = (java.sql.Date) jTable1.getValueAt(i, 1);
-                String idsiswa = jTable1.getValueAt(i, 2).toString();
-                String nmsiswa = jTable1.getValueAt(i, 3).toString();
-                String kelas = jTable1.getValueAt(i, 4).toString();
-                String notelp = jTable1.getValueAt(i, 5).toString();
-                String idbuku = jTable1.getValueAt(i, 6).toString();
-                String nmbuku = jTable1.getValueAt(i, 7).toString();
-                String penerbit = jTable1.getValueAt(i, 8).toString();
-                String tahunterbit = jTable1.getValueAt(i, 9).toString();
-                String tebal = jTable1.getValueAt(i, 10).toString();
-                java.sql.Date tanggalKembali = (java.sql.Date) jTable1.getValueAt(i, 11);
+            // 2. Simpan detail (per buku)
+            simpanDetail();
 
-                stat.setString(1, id);
-                stat.setDate(2, tanggalPinjam);
-                stat.setString(3, idsiswa);
-                stat.setString(4, nmsiswa);
-                stat.setString(5, kelas);
-                stat.setString(6, notelp);
-                stat.setString(7, idbuku);
-                stat.setString(8, nmbuku);
-                stat.setString(9, penerbit);
-                stat.setString(10, tahunterbit);
-                stat.setString(11, tebal);
-                stat.setDate(12, tanggalKembali);
+            // 3. Tampilkan dialog
+            Object[] options = {"Cetak Bukti", "Tidak"};
+            int pilih = JOptionPane.showOptionDialog(
+                    null,
+                    "<html>Data Berhasil Disimpan<br>Ingin mencetak bukti?</html>",
+                    "Cetak",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[0]
+            );
 
-                stat.executeUpdate();
+            if (pilih == 0) {
+                cetakBukti();
             }
 
-            JOptionPane.showMessageDialog(null, "Data berhasil disimpan");
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Data gagal disimpan: " + e);
+            JOptionPane.showMessageDialog(null, "Penyimpanan gagal: " + e.getMessage());
         }
 
         kosong();
         aktif();
         AutoNumber();
     }//GEN-LAST:event_bsimpan1ActionPerformed
+    
+    public void cetakBukti(){
+        try {
+        JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
 
-    private void bsimpan2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpan2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bsimpan2ActionPerformed
+        JasperPrint print = JasperFillManager.fillReport(
+                "src/report/Blank_Letter.jasper", 
+                null, // tidak pakai parameter
+                dataSource
+        );
+
+        JasperViewer.viewReport(print, false);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
+    } 
+    }
+    private void bbatal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatal1ActionPerformed
+        pn_main.removeAll();
+        pn_main.add(pn_view);
+        pn_main.repaint();
+        pn_main.revalidate();
+    }//GEN-LAST:event_bbatal1ActionPerformed
+
+    private void bhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bhapusActionPerformed
+        int row = jTable1.getSelectedRow();
+
+        if (row != -1) {  // pastikan ada baris dipilih
+            int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "Yakin ingin menghapus baris ini?",
+                    "Konfirmasi",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                ((DefaultTableModel) jTable1.getModel()).removeRow(row);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Pilih baris yang ingin dihapus!");
+        }
+    }//GEN-LAST:event_bhapusActionPerformed
     protected void datatablebuku(){
         Object [] Baris = {"Id Buku","Nama Buku","Penulis","Tahun Terbit","Tebal Halaman"};
         tabmode2 = new DefaultTableModel(null,Baris);
@@ -1187,15 +1291,16 @@ public class peminjaman extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private tools.MyButton bbatal;
+    private tools.MyButton bbatal1;
     private tools.MyButton bcaribuku;
     private tools.MyButton bcaridatabuku;
     private tools.MyButton bcaridatapinjam;
     private tools.MyButton bcaridatasiswa;
     private tools.MyButton bcarisiswa;
+    private tools.MyButton bhapus;
     private tools.MyButton bkembali;
     private tools.MyButton blihatdata1;
     private tools.MyButton bsimpan1;
-    private tools.MyButton bsimpan2;
     private tools.MyButton btambah;
     private tools.MyButton btncetak1;
     private javax.swing.JLabel jLabel1;
