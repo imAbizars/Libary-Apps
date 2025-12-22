@@ -15,6 +15,7 @@ import koneksi.koneksi;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 
@@ -361,14 +362,23 @@ private DefaultTableModel tabmode4;
         
     
     private void bprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprintActionPerformed
-        try{
-            String reportpath = "src/report/peminjaman.jasper";
-            HashMap<String, Object> parameters = new HashMap();
-            JasperPrint print  = JasperFillManager.fillReport(reportpath, parameters,conn);
-            JasperViewer viewer = new JasperViewer(print,false);
-            viewer.setVisible(true);
-        }catch(Exception e){
-            e.printStackTrace();
+        try {
+            HashMap<String, Object> param = new HashMap<>();
+
+            // Data tabel sebagai datasource
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(tabmode4);
+
+            JasperPrint jp = JasperFillManager.fillReport(
+                    "src/report/Simple_Blue.jasper",
+                    param,
+                    dataSource
+            );
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Gagal mencetak struk!\n" + e.getMessage());
         }
     }//GEN-LAST:event_bprintActionPerformed
 
@@ -448,45 +458,56 @@ private DefaultTableModel tabmode4;
    
     
     
-    private void tablepeminjaman() {
-     Object[] Baris = {
-            "Id Pinjam", "Tanggal Pinjam", "Id Siswa", "Nama Siswa", "Id Buku", "Nama Buku",
-            "Penerbit", "Tahun Terbit", "Tebal Halaman", "Jumlah"};
-        DefaultTableModel tabmode4 = new DefaultTableModel(null,Baris);
-        String caridata = txtcaripinjam.getText();
-        
-        try{
-             String sql = "SELECT p.id AS id_pinjam, p.id_siswa, p.nm_siswa, p.tgl_pinjam, " +
-             "d.id_buku, d.nama_buku, d.penerbit, d.tahun_terbit, d.tebal_buku, d.qty " +
-             "FROM peminjaman p " +
-             "JOIN datapeminjaman d ON p.id = d.id_pinjam " +  // <== tambahkan SPASI di akhir
-             "WHERE p.id LIKE '%" + caridata + "%' " +
-             "OR d.nama_buku LIKE '%" + caridata + "%' " +
-             "OR p.nm_siswa LIKE '%" + caridata + "%' " +
-             "ORDER BY p.id ASC";
+   protected void tablepeminjaman() {
+        Object[] Baris = {
+            "ID Pinjam", "Tanggal Pinjam",
+            "ID Siswa", "Nama Siswa", "Kelas", "Telp",
+            "ID Buku", "Nama Buku", "Penerbit", "Tahun Terbit", "Tebal Halaman","Status"
+        };
 
-                Statement stat = conn.createStatement();
-                ResultSet hasil = stat.executeQuery(sql);
-                while (hasil.next()) {
+        tabmode4 = new DefaultTableModel(null, Baris);
+        String caridata = txtcaripinjam.getText();
+
+        try {
+            String sql =
+                "SELECT p.id_peminjaman, p.tgl_pinjam, " +
+                "       s.id_siswa, s.nm_siswa, s.kelas, s.telepon, " +
+                "       b.id_buku, b.judul_buku, b.nama_penulis, b.tahun_terbit, b.tebal_buku, d.status " +
+                "FROM peminjaman p " +
+                "JOIN datasiswa s ON p.id_siswa = s.id_siswa " +
+                "JOIN detail_peminjaman d ON p.id_peminjaman = d.id_peminjaman " +
+                "JOIN databuku b ON d.id_buku = b.id_buku " +
+                "WHERE p.id_peminjaman LIKE '%" + caridata + "%' " +
+                "OR s.nm_siswa LIKE '%" + caridata + "%' " + 
+                "OR b.judul_buku LIKE '%" + caridata + "%' " +
+                "ORDER BY p.id_peminjaman ASC";
+
+            Statement stat = conn.createStatement();
+            ResultSet hasil = stat.executeQuery(sql);
+
+            while (hasil.next()) {
                 tabmode4.addRow(new Object[]{
-                    hasil.getString("id_pinjam"),
+                    hasil.getString("id_peminjaman"),
                     hasil.getString("tgl_pinjam"),
                     hasil.getString("id_siswa"),
                     hasil.getString("nm_siswa"),
+                    hasil.getString("kelas"),
+                    hasil.getString("telepon"),
                     hasil.getString("id_buku"),
-                    hasil.getString("nama_buku"),
-                    hasil.getString("penerbit"),
+                    hasil.getString("judul_buku"),
+                    hasil.getString("nama_penulis"),
                     hasil.getString("tahun_terbit"),
                     hasil.getString("tebal_buku"),
-                    hasil.getString("qty")
+                    hasil.getString("status"),
                 });
             }
-                tablepeminjaman.setModel(tabmode4);
-        }catch(Exception e){
+
+            tablepeminjaman.setModel(tabmode4);
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Data gagal ditampilkan: " + e.getMessage());
-        }  
+        }
     }
-    
     
     
 }
