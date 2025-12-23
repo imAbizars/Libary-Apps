@@ -15,6 +15,7 @@ import koneksi.koneksi;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 
@@ -361,18 +362,25 @@ private DefaultTableModel tabmode3;
         
     
     private void bprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bprintActionPerformed
-       try{
-        String reportPath = "src/report/pengembalian.jasper";
-        
-        HashMap<String, Object> parameters = new HashMap<>();
-        
-        JasperPrint print = JasperFillManager.fillReport(reportPath,parameters,conn);
-        JasperViewer viewer = new JasperViewer(print, false);
-        viewer.setExtendedState(JasperViewer.MAXIMIZED_BOTH);
-        viewer.setVisible(true);
-    } catch (Exception e){
-    e.printStackTrace();
-}
+       try {
+            HashMap<String, Object> param = new HashMap<>();
+
+            // Data tabel sebagai datasource
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(tabmode3);
+
+            JasperPrint jp = JasperFillManager.fillReport(
+                    "src/report/Simple_Blue_1.jasper",
+                    param,
+                    dataSource
+            );
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Gagal mencetak struk!\n" + e.getMessage());
+        }
+
     }//GEN-LAST:event_bprintActionPerformed
 
     private void txtnmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnmActionPerformed
@@ -455,34 +463,35 @@ private DefaultTableModel tabmode3;
 
     private void tablepengembalian() {
        Object[] Baris = {
-        "Id", "Id Peminjaman", "Tanggal Pinjam", "Tanggal Kembali", "Id Siswa", "Nama Siswa", "Id Buku", "Jumlah", "Denda"
+        "Id Pinjam", "Tgl Pinjam", "Tgl Kembali", "Id Siswa", "Nama Siswa", "Id Buku","Nama Buku","Kondisi","Deskripsi Fisik", "Denda"
     };
     tabmode3 = new DefaultTableModel(null, Baris);
     String caridata = txtcaridata.getText();
 
     try {
-        String sql = "SELECT p.id AS id, p.idpinjam, p.tglpinjam, p.tglkembali, " +
-                     "p.idsiswa, p.nmsiswa, d.id_buku, d.jumlah, p.denda " +
-                     "FROM pengembalianbuku p " +
-                     "JOIN pengembalian d ON p.id = d.id " +
-                     "WHERE p.id LIKE '%" + caridata + "%' " +
-                     "OR p.idsiswa LIKE '%" + caridata + "%' " +
-                     "OR p.nmsiswa LIKE '%" + caridata + "%' " +
-                     "ORDER BY p.id ASC";
+        String sql = "SELECT p.id_peminjaman,p.tgl_pinjam,p.tgl_kembali,p.id_siswa,p.nama_siswa, " +
+                     "d.id_buku,d.nama_buku,d.kondisi,d.deskripsifisik,d.denda " +
+                     "FROM pengembalian p " +
+                     "JOIN detail_pengembalian d ON p.id = d.id_pengembalian " +
+                     "WHERE p.id_siswa LIKE '%" + caridata + "%' " +
+                     "OR p.nama_siswa LIKE '%" + caridata + "%' " +
+                     "OR d.nama_buku LIKE '%" + caridata + "%' " +
+                     "ORDER BY p.id_peminjaman ASC";
 
         Statement stat = conn.createStatement();
         ResultSet hasil = stat.executeQuery(sql);
 
         while (hasil.next()) {
             tabmode3.addRow(new Object[] {
-                hasil.getString("id"),
-                hasil.getString("idpinjam"),
-                hasil.getString("tglpinjam"),
-                hasil.getString("tglkembali"),
-                hasil.getString("idsiswa"),
-                hasil.getString("nmsiswa"),
+                hasil.getString("id_peminjaman"),
+                hasil.getString("tgl_pinjam"),
+                hasil.getString("tgl_kembali"),
+                hasil.getString("id_siswa"),
+                hasil.getString("nama_siswa"),
                 hasil.getString("id_buku"),
-                hasil.getString("jumlah"),
+                hasil.getString("nama_buku"),
+                hasil.getString("kondisi"),
+                hasil.getString("deskripsifisik"),
                 hasil.getString("denda")
             });
     }
