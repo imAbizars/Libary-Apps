@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 /**
  *
@@ -101,7 +102,10 @@ public class pengembalian extends javax.swing.JPanel {
                 "d.id_buku, d.nama_buku, d.penerbit " +
                 "FROM peminjaman p " +
                 "JOIN detail_peminjaman d ON p.id_peminjaman = d.id_peminjaman " +
-                "WHERE p.id_peminjaman LIKE ? OR p.nama_siswa LIKE ? OR p.id_siswa LIKE ? " +
+                "WHERE d.status = 'Dipinjam' " +
+                "AND (p.id_peminjaman LIKE ? " +
+                "OR p.nama_siswa LIKE ? " +
+                "OR p.id_siswa LIKE ?) " +
                 "ORDER BY p.id_peminjaman ASC";
 
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -159,38 +163,14 @@ public class pengembalian extends javax.swing.JPanel {
         return 3000 + (int)((hariTelat - 1) * 1000);
     }
     
-    private void hapusDetail(String idPinjam,String idBuku){
-        String sql = "DELETE FROM detail_peminjaman WHERE id_peminjaman=? AND id_buku=?";
+    
+    
+    
+    private void updateStatusPeminjaman(String idPinjam){
         try{
+            String sql = "UPDATE detail_peminjaman SET status='Dikembalikan' WHERE id_peminjaman=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, idPinjam);
-            ps.setString(2,idBuku);
-            ps.executeUpdate();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-    
-    private boolean checkDetail(String idPinjam){
-         try{
-             String sql = "SELECT COUNT(*) AS total from detail_peminjaman WHERE id_peminjaman=?";
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ps.setString(1, idPinjam);
-             ResultSet hasil = ps.executeQuery();
-             
-             if(hasil.next()){
-                 return hasil.getInt("total")>0;
-             }
-         }catch(Exception e){
-             e.printStackTrace();
-         }
-         return false;
-    }
-    private void hapusMaster(String idPinjam){
-        try{
-            String sql = "DELETE FROM peminjaman WHERE id_peminjaman=?";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, idPinjam);;
             ps.executeUpdate();
         }catch(Exception e){
             e.printStackTrace();
@@ -307,6 +287,7 @@ public class pengembalian extends javax.swing.JPanel {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        btambah = new tools.MyButton();
         pn_bayar = new javax.swing.JPanel();
 
         setLayout(new java.awt.CardLayout());
@@ -589,17 +570,29 @@ public class pengembalian extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("SansSerif", 3, 12)); // NOI18N
         jLabel9.setText("*Pastikan data siswa dan buku sudah benar!");
 
+        btambah.setBackground(new java.awt.Color(51, 153, 255));
+        btambah.setForeground(new java.awt.Color(255, 255, 255));
+        btambah.setText("Tambah Buku");
+        btambah.setBorderColor(new java.awt.Color(51, 153, 255));
+        btambah.setColor(new java.awt.Color(51, 153, 255));
+        btambah.setColorClick(new java.awt.Color(101, 178, 255));
+        btambah.setColorOver(new java.awt.Color(101, 178, 255));
+        btambah.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        btambah.setRadius(20);
+        btambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btambahActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pn_kembaliLayout = new javax.swing.GroupLayout(pn_kembali);
         pn_kembali.setLayout(pn_kembaliLayout);
         pn_kembaliLayout.setHorizontalGroup(
             pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pn_kembaliLayout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pn_kembaliLayout.createSequentialGroup()
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_kembaliLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
                         .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pn_kembaliLayout.createSequentialGroup()
                                 .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -627,7 +620,9 @@ public class pengembalian extends javax.swing.JPanel {
                             .addComponent(jScrollPane3)
                             .addGroup(pn_kembaliLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btambah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(347, 347, 347)
@@ -636,8 +631,12 @@ public class pengembalian extends javax.swing.JPanel {
                                         .addComponent(jLabel26)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(bbayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(77, 77, 77))))
+                                    .addComponent(bbayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(pn_kembaliLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(541, 541, 541)))
+                .addGap(77, 77, 77))
         );
         pn_kembaliLayout.setVerticalGroup(
             pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -653,8 +652,10 @@ public class pengembalian extends javax.swing.JPanel {
                         .addGap(4, 4, 4))
                     .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bbayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pn_kembaliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bbayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -677,7 +678,7 @@ public class pengembalian extends javax.swing.JPanel {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(426, Short.MAX_VALUE))
+                .addContainerGap(420, Short.MAX_VALUE))
         );
 
         pn_main.add(pn_kembali, "card3");
@@ -720,17 +721,23 @@ public class pengembalian extends javax.swing.JPanel {
             String deskripsfisik = jTextArea1.getText();
             conn.setAutoCommit(false);
 
-            String sqlHeader = "INSERT INTO pengembalian (id, id_siswa, nama_siswa, tgl_kembali, total_denda) VALUES (?,?,?,?,?)";
+            String sqlHeader = "INSERT INTO pengembalian (id,id_peminjaman, id_siswa, nama_siswa,tgl_pinjam, tgl_kembali, total_denda) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement pstHeader = conn.prepareStatement(sqlHeader);
-
+            String idPinjam = tabmode2.getValueAt(0, 0).toString();
             String idSiswa = tabmode2.getValueAt(0, 2).toString();
             String namaSiswa = tabmode2.getValueAt(0, 3).toString();
+            Date utilDate = (Date) tabmode2.getValueAt(0, 1);
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
+
+            
             pstHeader.setString(1, idPengembalian);
-            pstHeader.setString(2, idSiswa);
-            pstHeader.setString(3, namaSiswa);
-            pstHeader.setDate(4, sqlTgl);
-            pstHeader.setInt(5, totalDenda);
+            pstHeader.setString(2,idPinjam);
+            pstHeader.setString(3, idSiswa);
+            pstHeader.setString(4, namaSiswa);
+            pstHeader.setDate(5, sqlDate);
+            pstHeader.setDate(6, sqlTgl);
+            pstHeader.setInt(7, totalDenda);
             pstHeader.executeUpdate();
 
             // INSERT DETAIL
@@ -738,7 +745,6 @@ public class pengembalian extends javax.swing.JPanel {
             PreparedStatement pstDetail = conn.prepareStatement(sqlDetail);
 
             for(int i = 0; i < tabmode2.getRowCount(); i++) {
-                String idPinjam = tabmode2.getValueAt(i, 0).toString();
                 String idBuku   = tabmode2.getValueAt(i, 4).toString();
 
                 
@@ -754,10 +760,7 @@ public class pengembalian extends javax.swing.JPanel {
                 pstDetail.executeUpdate();
 
                
-                hapusDetail(idPinjam, idBuku);
-                if(!checkDetail(idPinjam)){
-                    hapusMaster(idPinjam);
-                }
+                updateStatusPeminjaman(idPinjam);
             }
 
             conn.commit();
@@ -779,7 +782,11 @@ public class pengembalian extends javax.swing.JPanel {
     }//GEN-LAST:event_bsimpanActionPerformed
 
     private void bbatalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatalActionPerformed
-        // TODO add your handling code here:
+        tabmode2.setRowCount(0);
+        pn_main.removeAll();
+        pn_main.add(pn_view);
+        pn_main.repaint();
+        pn_main.revalidate();
     }//GEN-LAST:event_bbatalActionPerformed
 
     private void rdhilangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdhilangActionPerformed
@@ -809,7 +816,7 @@ public class pengembalian extends javax.swing.JPanel {
     private void bbayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbayarActionPerformed
         String totalStr = jLabel4.getText().replaceAll("[^0-9]", "");
         int totalDenda = Integer.parseInt(totalStr);
-
+        Date tgalkembali2 = tgalkembali.getDate();
         // Tampilkan input popup
         String input = JOptionPane.showInputDialog(this, 
                         "Masukkan jumlah bayar:");
@@ -836,19 +843,64 @@ public class pengembalian extends javax.swing.JPanel {
         int kembalian = bayar - totalDenda;
 
         // Set total denda menjadi nol
-        jLabel4.setText("0");
+        
 
         // Tampilkan hasil
-        JOptionPane.showMessageDialog(this, 
-                "Pembayaran berhasil!\n" + 
-                "Total Denda : " + totalDenda + "\n" +
-                "Bayar       : " + bayar + "\n" +
-                "Kembalian   : " + kembalian);
-    }//GEN-LAST:event_bbayarActionPerformed
+        int pilihan = JOptionPane.showOptionDialog(
+                this,
+                "Pembayaran berhasil!\n\n" +
+                "Total Denda : Rp " + totalDenda + "\n" +
+                "Bayar       : Rp " + bayar + "\n" +
+                "Kembalian   : Rp " + kembalian + "\n\n" +
+                "Cetak bukti pembayaran?",
+                "Pembayaran",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"Cetak Bukti", "Tidak"},
+                "Cetak Bukti"
+        );
 
+        if(pilihan == JOptionPane.YES_OPTION){
+            cetakStruk(totalDenda, bayar, kembalian,tgalkembali2);
+            jLabel4.setText("0");
+            bsimpanActionPerformed(evt);
+        }
+    }//GEN-LAST:event_bbayarActionPerformed
+    private void cetakStruk(int totalDenda, int bayar, int kembalian,Date tgalkembali2){
+        try {
+            HashMap<String, Object> param = new HashMap<>();
+            param.put("totalDenda", totalDenda);
+            param.put("bayar", bayar);
+            param.put("kembalian", kembalian);
+            param.put("tgalkembali2",tgalkembali2);
+
+            // Data tabel sebagai datasource
+            JRTableModelDataSource dataSource = new JRTableModelDataSource(tabmode2);
+
+            JasperPrint jp = JasperFillManager.fillReport(
+                    "src/report/Blank_Letter_1.jasper",
+                    param,
+                    dataSource
+            );
+
+            JasperViewer.viewReport(jp, false);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Gagal mencetak struk!\n" + e.getMessage());
+        }
+    }
     private void rdbagusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbagusActionPerformed
         updateKondisiBuku();
     }//GEN-LAST:event_rdbagusActionPerformed
+
+    private void btambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btambahActionPerformed
+        pn_main.removeAll();
+        pn_main.add(pn_view);
+        pn_main.repaint();
+        pn_main.revalidate();
+    }//GEN-LAST:event_btambahActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -856,6 +908,7 @@ public class pengembalian extends javax.swing.JPanel {
     private tools.MyButton bbayar;
     private tools.MyButton bcaridata;
     private tools.MyButton bsimpan;
+    private tools.MyButton btambah;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

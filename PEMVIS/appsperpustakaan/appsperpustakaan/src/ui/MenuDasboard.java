@@ -334,7 +334,7 @@ private DefaultTableModel tabmode4;
         Object[] Baris = {
             "ID Pinjam", "Tanggal Pinjam",
             "ID Siswa", "Nama Siswa", "Kelas", "Telp",
-            "ID Buku", "Nama Buku", "Penerbit", "Tahun Terbit", "Tebal Halaman"
+            "ID Buku", "Nama Buku", "Penerbit", "Tahun Terbit", "Tebal Halaman","Status"
         };
 
         tabmode4 = new DefaultTableModel(null, Baris);
@@ -344,7 +344,7 @@ private DefaultTableModel tabmode4;
                 String sql =
                 "SELECT p.id_peminjaman, p.tgl_pinjam, " +
                 "       s.id_siswa, s.nm_siswa, s.kelas, s.telepon, " +
-                "       b.id_buku, b.judul_buku, b.nama_penulis, b.tahun_terbit, b.tebal_buku " +
+                "       b.id_buku, b.judul_buku, b.nama_penulis, b.tahun_terbit, b.tebal_buku, d.status " +
                 "FROM peminjaman p " +
                 "JOIN datasiswa s ON p.id_siswa = s.id_siswa " +
                 "JOIN detail_peminjaman d ON p.id_peminjaman = d.id_peminjaman " +
@@ -369,7 +369,8 @@ private DefaultTableModel tabmode4;
                     hasil.getString("judul_buku"),
                     hasil.getString("nama_penulis"),
                     hasil.getString("tahun_terbit"),
-                    hasil.getString("tebal_buku")
+                    hasil.getString("tebal_buku"),
+                    hasil.getString("status"),
                 });
             }
 

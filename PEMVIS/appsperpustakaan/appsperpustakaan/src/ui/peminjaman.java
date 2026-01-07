@@ -1169,8 +1169,8 @@ public class peminjaman extends javax.swing.JPanel {
     }
     private void simpanDetail() throws SQLException {
         String sql = "INSERT INTO detail_peminjaman "
-                   + "(id_detail, id_peminjaman, id_buku, nama_buku, penerbit, tahun_terbit, tebal_buku) "
-                   + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                   + "(id_detail, id_peminjaman, id_buku, nama_buku, penerbit, tahun_terbit, tebal_buku, status) "
+                   + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         int rowCount = jTable1.getRowCount();
 
@@ -1184,6 +1184,7 @@ public class peminjaman extends javax.swing.JPanel {
             stat.setString(5, jTable1.getValueAt(i, 9).toString()); // penerbit
             stat.setString(6, jTable1.getValueAt(i,10).toString()); // tahun
             stat.setString(7, jTable1.getValueAt(i,11).toString()); // tebal
+            stat.setString(8,"Dipinjam");
 
             stat.executeUpdate();
         }
