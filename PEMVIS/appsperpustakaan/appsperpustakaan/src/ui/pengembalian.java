@@ -879,7 +879,7 @@ public class pengembalian extends javax.swing.JPanel {
             JRTableModelDataSource dataSource = new JRTableModelDataSource(tabmode2);
 
             JasperPrint jp = JasperFillManager.fillReport(
-                    "src/report/Blank_Letter_1.jasper",
+                    "src/report/buktidenda.jasper",
                     param,
                     dataSource
             );

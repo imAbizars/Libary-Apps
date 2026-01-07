@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportsiswa" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bb1e7191-5ae6-4167-8c6e-7e374c1d0e27">
 	<property name="com.jaspersoft.studio.data.sql.tables">
 		<![CDATA[cGVycHVzdGFrYWFuLmRhdGFzaXN3YSBBUyAsODAsMzMsZjc1MmMxNWYtYWRlOC00NDI0LWIxNDEt
@@ -55,14 +55,14 @@ FROM perpustakaan.datasiswa]]>
 				<staticText>
 					<reportElement x="131" y="0" width="580" height="50" forecolor="#FFFFFF" uuid="254922fd-e217-4c09-b31d-a9985d01e32a"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Poppins SemiBold" size="30" isBold="true"/>
+						<font fontName="Arial" size="30" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Laporan Data Siswa Perpustakaan]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="296" y="40" width="250" height="30" forecolor="#FFFFFF" uuid="3cf26e83-8b97-496d-8e41-4b743e1bf577"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Poppins Medium" size="14" isBold="true"/>
+						<font fontName="Arial" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[SMK NEGERI 22 JAKARTA ]]></text>
 				</staticText>
@@ -79,7 +79,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fa7a50a-a76c-4bba-8849-c4cac1b057d6"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID SISWA]]></text>
 			</staticText>
@@ -88,7 +88,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b054db05-6fc5-4032-9d57-95d14520cbfe"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAMA SISWA]]></text>
 			</staticText>
@@ -97,7 +97,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b7b3cde7-a575-4509-be2e-167d3ba80aa6"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KELAS]]></text>
 			</staticText>
@@ -106,7 +106,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a43f1e2e-581d-4bb8-bc90-68a6f31e86f6"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JENIS]]></text>
 			</staticText>
@@ -115,7 +115,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ad1063a-cc0c-41c8-8070-92d95dc2ddf0"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TELEPON]]></text>
 			</staticText>
@@ -124,7 +124,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87028daf-f475-45d8-93de-1c000c6abef0"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ALAMAT]]></text>
 			</staticText>
@@ -137,7 +137,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3fa7a50a-a76c-4bba-8849-c4cac1b057d6"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id_siswa}]]></textFieldExpression>
 			</textField>
@@ -146,7 +146,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b054db05-6fc5-4032-9d57-95d14520cbfe"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nm_siswa}]]></textFieldExpression>
 			</textField>
@@ -155,7 +155,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b7b3cde7-a575-4509-be2e-167d3ba80aa6"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{kelas}]]></textFieldExpression>
 			</textField>
@@ -164,7 +164,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a43f1e2e-581d-4bb8-bc90-68a6f31e86f6"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{jenis}]]></textFieldExpression>
 			</textField>
@@ -173,7 +173,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4ad1063a-cc0c-41c8-8070-92d95dc2ddf0"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{telepon}]]></textFieldExpression>
 			</textField>
@@ -182,7 +182,7 @@ FROM perpustakaan.datasiswa]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87028daf-f475-45d8-93de-1c000c6abef0"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins Medium" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{alamat}]]></textFieldExpression>
 			</textField>

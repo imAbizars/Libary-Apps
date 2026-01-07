@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_Letter" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="55a21831-0d8e-4d58-bbf1-8dd809ea9a0e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Nama" class="java.lang.String"/>
+	<field name="Id Buku" class="java.lang.String"/>
+	<field name="Tanggal Pinjam" class="java.sql.Date"/>
+	<field name="Tanggal Kembali" class="java.sql.Date"/>
+	<field name="Id Pinjam" class="java.lang.String"/>
+	<field name="Id Siswa" class="java.lang.String"/>
+	<field name="Nama Buku" class="java.lang.String"/>
+	<field name="Penerbit" class="java.lang.String"/>
+	<field name="Tahun" class="java.lang.String"/>
+	<field name="Tebal" class="java.lang.String"/>
+	<field name="Id Detail" class="java.lang.String"/>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{Nama}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{Tanggal Pinjam}]]></groupExpression>
+	</group>
+	<group name="Group3">
+		<groupExpression><![CDATA[$F{Tanggal Kembali}]]></groupExpression>
+	</group>
+	<group name="Group4">
+		<groupExpression><![CDATA[$F{Id Pinjam}]]></groupExpression>
+	</group>
+	<group name="Group5">
+		<groupExpression><![CDATA[$F{Id Siswa}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="175" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="100" width="569" height="73" uuid="3dad940e-397c-4969-87c3-9aaed5ad5f4e"/>
+			</rectangle>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="570" height="109" forecolor="#FFFFFF" backcolor="#4988C4" uuid="dd605bfa-6ae7-4250-86fc-5661ab74a7d0"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid" lineColor="#030000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bukti Administratif Peminjaman Buku 
+Perpustakaan SMKN 22 Jakarta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="120" width="496" height="32" uuid="dca62b96-a2d0-46be-a56d-8eedd27912c8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Harap kembalikan buku pinjaman sesuai dengan tanggal pengembalian]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="78" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="-2" width="569" height="79" uuid="50c020fc-d036-43e6-b375-f4214a08026e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="370" y="10" width="100" height="30" uuid="610b51de-25cd-4a24-8251-32aa0b5f8e84"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Tanggal Kembali]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="10" width="100" height="30" uuid="da4f0238-a644-4cf8-a627-166bba7a3c5d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Tanggal Pinjam]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="80" y="40" width="100" height="30" uuid="41db8449-85e6-4a92-9ce4-f9c9e771e58c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tanggal Pinjam}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="40" width="100" height="30" uuid="7f0563ab-1df0-48f8-9c3c-ef68c81535f9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tanggal Kembali}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="244" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="569" height="243" uuid="3c309865-b700-483d-b076-70ffe8eadb76"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="130" width="148" height="35" uuid="2b73074a-dcae-478a-86a4-87295985f25a"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id Detail]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="130" width="110" height="35" uuid="908d02d3-3908-4f18-887d-6c10200b3a9f"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tahun Terbit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="130" width="121" height="35" uuid="d536b12d-7bb4-41f0-af8c-961d37e0506a"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Buku]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="149" y="130" width="80" height="35" uuid="642142d9-2f0d-4d7f-85a5-a432e422936b"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id Buku]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="165" width="148" height="36" uuid="5e6bf460-4e3e-43e3-8090-a37e2b071331">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b253c918-0f1d-47da-9da4-9c3beb87b8f2"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Id Detail}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="149" y="165" width="80" height="36" uuid="946361b4-6cc1-43a6-bf40-b24d3ab375b7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3df21e8-3f40-4c52-b0b4-d19045f92ab2"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Id Buku}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="229" y="165" width="121" height="36" uuid="1b466beb-aefb-472c-93d6-845ba7ebe92c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2b3031ad-29dc-4b91-9e01-24718146a6b5"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nama Buku}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="70" width="100" height="30" uuid="e54657a6-9ca2-4924-8d5b-ad5c776d93d2"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Id Peminjaman :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="350" y="165" width="110" height="36" uuid="1802e60d-3b26-4938-8b5a-16fd1ae89af6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5061ff14-2405-4718-8a29-85df2b31dfd3"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tahun}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="165" width="110" height="36" uuid="a02e6925-f7ea-444a-a620-cb8744f469ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="995b12cf-bc15-4522-979f-acdd02e7dc8e"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tebal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="460" y="130" width="110" height="35" uuid="d5427292-0776-4af8-9e57-efdeeacf6838"/>
+				<box>
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tebal Halaman]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="10" width="100" height="30" uuid="d051b8a3-17be-456c-a743-f283d502df3f"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Nama :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="40" width="100" height="30" uuid="5f412ddb-a71b-4ca2-98fe-70fc39ea82e6"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Id Siswa :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="40" width="100" height="30" uuid="6ab93a17-a82f-471c-87db-8d0d755d2e4d"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Id Siswa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="10" width="100" height="30" uuid="4d467362-bb7b-439b-8153-7014d5fd6268"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="70" width="100" height="30" uuid="4d80f3cb-3431-4fe1-9af3-0b15415ba28b"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Id Pinjam}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="129" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="569" height="129" uuid="35edf66c-b541-4e21-b86a-f9a4d2a4c607"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="50" y="10" width="80" height="20" uuid="0815dbb4-33bf-415b-9c22-3f685e458024"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Petugas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="100" width="80" height="20" uuid="f4fed1c8-faeb-48ee-9565-efef2748df92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[TTD]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="126" splitType="Stretch">
+			<rectangle>
+				<reportElement x="1" y="0" width="569" height="53" uuid="831f94dc-4551-461b-ae48-843f2380c0b0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="30" y="16" width="300" height="20" uuid="d1280ed9-3562-4042-adb7-9b2ca04a9f77"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Note : Simpan dan bawa bukti berikut saat pengembalian buku]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

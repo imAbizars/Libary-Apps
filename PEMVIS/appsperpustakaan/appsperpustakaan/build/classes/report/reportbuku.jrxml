@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<!-- Created with Jaspersoft Studio version 6.21.5.final using JasperReports Library version 6.21.5-74d586df47b25dbd05bd0957999819196e59934a  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportbuku" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="73f3b960-0d49-453c-80bd-9936ee30b721">
 	<property name="com.jaspersoft.studio.data.sql.tables">
 		<![CDATA[cGVycHVzdGFrYWFuLmRhdGFidWt1IEFTICwxNCwxNCxmOWMyYTlhMy00MjkyLTQyMGItYTg0MC0w
@@ -58,14 +58,14 @@ FROM perpustakaan.databuku]]>
 				<staticText>
 					<reportElement x="0" y="0" width="842" height="60" forecolor="#FFFFFF" uuid="64c113c1-5728-4e55-b993-d8add6fec6fd"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Poppins SemiBold" size="30" isBold="true"/>
+						<font fontName="Arial" size="30" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Laporan Data Buku Perpustakaan]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="331" y="50" width="180" height="30" forecolor="#FFFFFF" uuid="0f8d17fb-b06d-453d-83fa-1b81989ea368"/>
 					<textElement textAlignment="Center">
-						<font fontName="Poppins Medium" size="14" isBold="true"/>
+						<font fontName="Arial" size="14" isBold="true"/>
 					</textElement>
 					<text><![CDATA[SMK NEGERI 22 JAKARTA ]]></text>
 				</staticText>
@@ -82,7 +82,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58346efa-5baf-4140-b994-c63d97afc05e"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins SemiBold" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID BUKU]]></text>
 			</staticText>
@@ -91,7 +91,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9f1eef1-8a68-43d3-8044-102d3eb653ab"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins SemiBold" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JUDUL BUKU]]></text>
 			</staticText>
@@ -100,7 +100,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="628683ac-2bc2-4808-9071-92b49515f39c"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins SemiBold" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAMA PENULIS]]></text>
 			</staticText>
@@ -109,7 +109,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="145211df-8124-448a-a886-d1738fd9aa2c"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins SemiBold" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TAHUN TERBIT]]></text>
 			</staticText>
@@ -118,7 +118,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="91a5814e-5821-4e0c-a4d2-889373d99ae4"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins SemiBold" size="10" isBold="true"/>
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TEBAL BUKU]]></text>
 			</staticText>
@@ -131,7 +131,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="58346efa-5baf-4140-b994-c63d97afc05e"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id_buku}]]></textFieldExpression>
 			</textField>
@@ -140,7 +140,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9f1eef1-8a68-43d3-8044-102d3eb653ab"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{judul_buku}]]></textFieldExpression>
 			</textField>
@@ -149,7 +149,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="628683ac-2bc2-4808-9071-92b49515f39c"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nama_penulis}]]></textFieldExpression>
 			</textField>
@@ -158,7 +158,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="145211df-8124-448a-a886-d1738fd9aa2c"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tahun_terbit}]]></textFieldExpression>
 			</textField>
@@ -167,7 +167,7 @@ FROM perpustakaan.databuku]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="91a5814e-5821-4e0c-a4d2-889373d99ae4"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Poppins" size="10"/>
+					<font fontName="Arial" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tebal_buku}]]></textFieldExpression>
 			</textField>

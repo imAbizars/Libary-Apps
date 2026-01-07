@@ -1,4 +1,3 @@
-
 package ui;
 import java.awt.event.KeyEvent;
 import java.sql.*;
@@ -34,7 +33,8 @@ public class peminjaman extends javax.swing.JPanel {
     }
     protected void nama(){
         try{
-            String sql = "SELECT * from datapetugas where id_petugas='"+jLabel6.getText()+"'";
+            String sql = "SELECT * from datapetugas where id_petugas='"
+                    +jLabel6.getText()+"'";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             if(hasil.next()){
@@ -44,15 +44,14 @@ public class peminjaman extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "data gagal dipanggil");
         }
     }
-    
-
     protected void aktif(){
-        Object[] Baris = {"Id Detail","Id Pinjam" ,"Tanggal Pinjam", "Id Siswa", "Nama", "Kelas", "No Telp",
-        "Id Buku", "Nama Buku", "Penerbit", "Tahun", "Tebal", "Tanggal Kembali"};
+        Object[] Baris = {"Id Detail","Id Pinjam" ,"Tanggal Pinjam", "Id Siswa",
+            "Nama", "Kelas", "No Telp",
+        "Id Buku", "Nama Buku", "Penerbit", "Tahun", "Tebal", "Tanggal Kembali"
+        };
         tabmode5 = new DefaultTableModel(null,Baris);
         jTable1.setModel(tabmode5);
         tglpinjam.setDate(new java.util.Date());
-        
     }
     protected void kosong(){
         txtidsiswa.setText("");
@@ -69,34 +68,24 @@ public class peminjaman extends javax.swing.JPanel {
     }
     protected void AutoNumber(){
          try {
-            String sql = "SELECT id_peminjaman FROM peminjaman ORDER BY id_peminjaman DESC LIMIT 1";
+            String sql = "SELECT id_peminjaman FROM peminjaman ORDER BY "
+                    + "id_peminjaman DESC LIMIT 1";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
-
             String nextID;
-
             if (rs.next()) {
-                // Ambil angka di belakang PMJ
-                String lastID = rs.getString("id_peminjaman").substring(3); // contoh: 0007
+                String lastID = rs.getString("id_peminjaman").substring(3);
                 int number = Integer.parseInt(lastID) + 1;                 
-
-                // Format ulang menjadi 4 digit
                 nextID = String.format("PMJ%04d", number);
-
             } else {
-                // Jika tabel masih kosong
                 nextID = "PMJ0001";
             }
-
-            // Tampilkan ke textfield
             jTextFieldRounded1.setText(nextID);
-
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Auto Number Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Auto Number Error: " + 
+                    e.getMessage());
         }
-
     }
-    
     private String autoDetailPerPinjam(String idPinjam) {
         int count = tabmode5.getRowCount() + 1;
         return idPinjam + "-DT" + String.format("%03d", count);
@@ -107,27 +96,25 @@ public class peminjaman extends javax.swing.JPanel {
             "ID Siswa", "Nama Siswa", "Kelas", "Telp",
             "ID Buku", "Nama Buku", "Penerbit", "Tahun Terbit", "Tebal Halaman"
         };
-
         tabmode4 = new DefaultTableModel(null, Baris);
         String caridata = txtcaripinjam.getText();
-
         try {
             String sql =
                 "SELECT p.id_peminjaman, p.tgl_pinjam, " +
                 "       s.id_siswa, s.nm_siswa, s.kelas, s.telepon, " +
-                "       b.id_buku, b.judul_buku, b.nama_penulis, b.tahun_terbit, b.tebal_buku " +
+                "       b.id_buku, b.judul_buku, b.nama_penulis, "
+                    + "b.tahun_terbit, b.tebal_buku " +
                 "FROM peminjaman p " +
                 "JOIN datasiswa s ON p.id_siswa = s.id_siswa " +
-                "JOIN detail_peminjaman d ON p.id_peminjaman = d.id_peminjaman " +
+                "JOIN detail_peminjaman d ON "
+                    + "p.id_peminjaman = d.id_peminjaman " +
                 "JOIN databuku b ON d.id_buku = b.id_buku " +
                 "WHERE p.id_peminjaman LIKE '%" + caridata + "%' " +
                 "OR s.nm_siswa LIKE '%" + caridata + "%' " + 
                 "OR b.judul_buku LIKE '%" + caridata + "%' " +
                 "ORDER BY p.id_peminjaman ASC";
-
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
-
             while (hasil.next()) {
                 tabmode4.addRow(new Object[]{
                     hasil.getString("id_peminjaman"),
@@ -143,16 +130,12 @@ public class peminjaman extends javax.swing.JPanel {
                     hasil.getString("tebal_buku")
                 });
             }
-
             tablepeminjaman.setModel(tabmode4);
-
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Data gagal ditampilkan: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Data gagal ditampilkan: " 
+                    + e.getMessage());
         }
     }
-
-
-     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -914,13 +897,11 @@ public class peminjaman extends javax.swing.JPanel {
     private void btambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btambahActionPerformed
        try {
         String idPinjam = jTextFieldRounded1.getText();
-
-        // ID detail di-generate dari jumlah row keranjang
         String idDetail = autoDetailPerPinjam(idPinjam);
-
-        java.sql.Date tanggalPinjam = new java.sql.Date(tglpinjam.getDate().getTime());
-        java.sql.Date tanggalKembali = new java.sql.Date(tglpinjam1.getDate().getTime());
-
+        java.sql.Date tanggalPinjam = new java.sql.Date
+        (tglpinjam.getDate().getTime());
+        java.sql.Date tanggalKembali = new java.sql.Date
+        (tglpinjam1.getDate().getTime());
         tabmode5.addRow(new Object[]{
             idDetail,
             idPinjam,
@@ -936,13 +917,10 @@ public class peminjaman extends javax.swing.JPanel {
             txttebal.getText(),
             tanggalKembali
         });
-
         jTable1.setModel(tabmode5);
-
     } catch (Exception e) {
         System.err.println("Error : " + e);
     }
-
     pn_main.removeAll();
     pn_main.add(pn_pinjam);
     pn_main.repaint();
@@ -954,7 +932,7 @@ public class peminjaman extends javax.swing.JPanel {
         aktif();
         AutoNumber();
     }//GEN-LAST:event_bbatalActionPerformed
-        //method table siswa
+
     private void bcarisiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcarisiswaActionPerformed
         String idSiswa = txtidsiswa.getText().trim();
         if(idSiswa.isEmpty()){
@@ -975,12 +953,14 @@ public class peminjaman extends javax.swing.JPanel {
                     txttelp.setText(hasil.getString("telepon"));
                     txtalamat.setText(hasil.getString("alamat"));
                 }else{
-                    JOptionPane.showMessageDialog(this, "data siswa dengan id "+ idSiswa+"tidak ditemukan");
+                    JOptionPane.showMessageDialog(this, "data siswa dengan id "+
+                            idSiswa+"tidak ditemukan");
                 }
                 hasil.close();
                 stat.close();
             }catch(Exception e){
-                JOptionPane.showMessageDialog(this, "terjadi kesalahan"+e.getMessage());
+                JOptionPane.showMessageDialog(this, "terjadi kesalahan"
+                        +e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -994,26 +974,26 @@ public class peminjaman extends javax.swing.JPanel {
        String d = tabmode.getValueAt(tabledatasiswa, 3).toString();
        String e = tabmode.getValueAt(tabledatasiswa, 4).toString();
        String f = tabmode.getValueAt(tabledatasiswa, 5).toString();
-       
         txtidsiswa.setText(a);
         txtnmsiswa.setText(b);
         txtkelas.setText(c);
         txtjenis.setText(d);
         txttelp.setText(e);
         txtalamat.setText(f);
-        
         pn_main.removeAll();
         pn_main.add(pn_view);
         pn_main.repaint();
         pn_main.revalidate();
     }//GEN-LAST:event_tablesiswaMouseClicked
     protected void datatablesiswa(){
-        Object [] Baris = {"Id Siswa","Nama","Kelas","Jenis Kelamin","Telepon","Alamat"};
+        Object [] Baris = {"Id Siswa","Nama","Kelas","Jenis Kelamin","Telepon",
+            "Alamat"};
         tabmode = new DefaultTableModel(null,Baris);
         String caridata = txtcaridatasiswa.getText();
-        
         try{
-            String sql = "SELECT * FROM datasiswa WHERE id_siswa LIKE '%" + caridata + "%' OR nm_siswa LIKE '%" + caridata + "%' ORDER BY id_siswa ASC";
+            String sql = "SELECT * FROM datasiswa WHERE id_siswa LIKE '%"
+                    + caridata + "%' OR nm_siswa LIKE '%" + caridata + "%' "
+                    + "ORDER BY id_siswa ASC";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()){
@@ -1030,10 +1010,7 @@ public class peminjaman extends javax.swing.JPanel {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null,"data gagal dipanggil"+ e);
         }
-    }
-    //end method table siswa
-    
-// method table buku        
+    }     
     private void bcaribukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bcaribukuActionPerformed
         String idBuku = txtidbuku.getText().trim();
         if(idBuku.isEmpty()){
@@ -1053,7 +1030,8 @@ public class peminjaman extends javax.swing.JPanel {
                     txttahun.setText(hasil.getString("tahun_terbit"));
                     txttebal.setText(hasil.getString("tebal_buku"));
                 }else{
-                    JOptionPane.showMessageDialog(this,"data buku dengan id " + idBuku+ " tidak ditemukan" );
+                    JOptionPane.showMessageDialog(this,"data buku dengan id " 
+                            + idBuku+ " tidak ditemukan" );
                     txtidbuku.setText("");
                     txtnmbuku.setText("");
                     txtpenerbit.setText("");
@@ -1063,11 +1041,11 @@ public class peminjaman extends javax.swing.JPanel {
                 hasil.close();
                 stat.close();
             }catch(Exception e){
-                JOptionPane.showMessageDialog(this,"terjadi kesalahan"+e.getMessage());
+                JOptionPane.showMessageDialog(this,"terjadi kesalahan"
+                        +e.getMessage());
                 e.printStackTrace();
             }
         }
-        
     }//GEN-LAST:event_bcaribukuActionPerformed
 
     private void tablebukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablebukuMouseClicked
@@ -1077,21 +1055,16 @@ public class peminjaman extends javax.swing.JPanel {
        String c = tabmode2.getValueAt(tabledatabuku, 2).toString();
        String d = tabmode2.getValueAt(tabledatabuku, 3).toString();
        String e = tabmode2.getValueAt(tabledatabuku, 4).toString();
-       
         txtidbuku.setText(a);
         txtnmbuku.setText(b);
         txtpenerbit.setText(c);
         txttahun.setText(d);
         txttebal.setText(e);
-      
         java.util.Date tglPinjam = tglpinjam.getDate();
-
         if (tglPinjam != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(tglPinjam);
-
-            cal.add(Calendar.DAY_OF_MONTH, 30); // +30 hari
-
+            cal.add(Calendar.DAY_OF_MONTH, 30);
             tglpinjam1.setDate(cal.getTime());
         }
         pn_main.removeAll();
@@ -1136,7 +1109,8 @@ public class peminjaman extends javax.swing.JPanel {
         try{
             String reportpath = "src/report/peminjaman.jasper";
             HashMap<String, Object> parameters = new HashMap();
-            JasperPrint print  = JasperFillManager.fillReport(reportpath, parameters,conn);
+            JasperPrint print  = JasperFillManager.fillReport(reportpath, 
+                    parameters,conn);
             JasperViewer viewer = new JasperViewer(print,false);
             viewer.setVisible(true);
         }catch(Exception e){
@@ -1152,11 +1126,10 @@ public class peminjaman extends javax.swing.JPanel {
         pn_main.revalidate();
     }//GEN-LAST:event_bkembaliActionPerformed
     private void simpanMaster() throws SQLException {
-        String sql = "INSERT INTO peminjaman (id_peminjaman, tgl_pinjam, id_siswa, nama_siswa, kelas, telp, tgl_kembali) "
+        String sql = "INSERT INTO peminjaman (id_peminjaman, tgl_pinjam, "
+                + "id_siswa, nama_siswa, kelas, telp, tgl_kembali) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         PreparedStatement stat = conn.prepareStatement(sql);
-
         stat.setString(1, jTextFieldRounded1.getText());
         stat.setDate(2, new java.sql.Date(tglpinjam.getDate().getTime()));
         stat.setString(3, txtidsiswa.getText());
@@ -1164,19 +1137,16 @@ public class peminjaman extends javax.swing.JPanel {
         stat.setString(5, txtkelas.getText());
         stat.setString(6, txttelp.getText());
         stat.setDate(7, new java.sql.Date(tglpinjam1.getDate().getTime()));
-
         stat.executeUpdate();
     }
     private void simpanDetail() throws SQLException {
         String sql = "INSERT INTO detail_peminjaman "
-                   + "(id_detail, id_peminjaman, id_buku, nama_buku, penerbit, tahun_terbit, tebal_buku, status) "
+                   + "(id_detail, id_peminjaman, id_buku, nama_buku, penerbit, "
+                + "tahun_terbit, tebal_buku, status) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
         int rowCount = jTable1.getRowCount();
-
         for (int i = 0; i < rowCount; i++) {
             PreparedStatement stat = conn.prepareStatement(sql);
-
             stat.setString(1, jTable1.getValueAt(i, 0).toString()); // id_detail
             stat.setString(2, jTable1.getValueAt(i, 1).toString()); // id_peminjaman
             stat.setString(3, jTable1.getValueAt(i, 7).toString()); // id_buku
@@ -1185,25 +1155,19 @@ public class peminjaman extends javax.swing.JPanel {
             stat.setString(6, jTable1.getValueAt(i,10).toString()); // tahun
             stat.setString(7, jTable1.getValueAt(i,11).toString()); // tebal
             stat.setString(8,"Dipinjam");
-
             stat.executeUpdate();
         }
     }
 
     private void bsimpan1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bsimpan1ActionPerformed
         try {
-
-            // 1. Simpan master (sekali)
             simpanMaster();
-
-            // 2. Simpan detail (per buku)
             simpanDetail();
-
-            // 3. Tampilkan dialog
             Object[] options = {"Cetak Bukti", "Tidak"};
             int pilih = JOptionPane.showOptionDialog(
                     null,
-                    "<html>Data Berhasil Disimpan<br>Ingin mencetak bukti?</html>",
+                    "<html>Data Berhasil Disimpan"
+                            + "<br>Ingin mencetak bukti?</html>",
                     "Cetak",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
@@ -1211,15 +1175,13 @@ public class peminjaman extends javax.swing.JPanel {
                     options,
                     options[0]
             );
-
             if (pilih == 0) {
                 cetakBukti();
             }
-
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Penyimpanan gagal: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Penyimpanan gagal: " 
+                    + e.getMessage());
         }
-
         kosong();
         aktif();
         AutoNumber();
@@ -1227,17 +1189,17 @@ public class peminjaman extends javax.swing.JPanel {
     
     public void cetakBukti(){
         try {
-        JRTableModelDataSource dataSource = new JRTableModelDataSource(jTable1.getModel());
-
+        JRTableModelDataSource dataSource = new JRTableModelDataSource
+        (jTable1.getModel());
         JasperPrint print = JasperFillManager.fillReport(
-                "src/report/Blank_Letter.jasper", 
-                null, // tidak pakai parameter
+                "src/report/buktipinjam.jasper", 
+                null,
                 dataSource
         );
-
         JasperViewer.viewReport(print, false);
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Gagal mencetak: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Gagal mencetak: " 
+                + e.getMessage());
     } 
     }
     private void bbatal1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bbatal1ActionPerformed
@@ -1249,29 +1211,29 @@ public class peminjaman extends javax.swing.JPanel {
 
     private void bhapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bhapusActionPerformed
         int row = jTable1.getSelectedRow();
-
-        if (row != -1) {  // pastikan ada baris dipilih
-            int confirm = JOptionPane.showConfirmDialog(
+        if (row != -1) {int confirm = JOptionPane.showConfirmDialog(
                     null,
                     "Yakin ingin menghapus baris ini?",
                     "Konfirmasi",
                     JOptionPane.YES_NO_OPTION
             );
-
             if (confirm == JOptionPane.YES_OPTION) {
                 ((DefaultTableModel) jTable1.getModel()).removeRow(row);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Pilih baris yang ingin dihapus!");
+            JOptionPane.showMessageDialog
+        (null, "Pilih baris yang ingin dihapus!");
         }
     }//GEN-LAST:event_bhapusActionPerformed
     protected void datatablebuku(){
-        Object [] Baris = {"Id Buku","Nama Buku","Penulis","Tahun Terbit","Tebal Halaman"};
+        Object [] Baris = {"Id Buku","Nama Buku","Penulis",
+            "Tahun Terbit","Tebal Halaman"};
         tabmode2 = new DefaultTableModel(null,Baris);
         String caridata = txtdatatablebuku.getText();
-        
         try{
-            String sql = "SELECT * FROM databuku WHERE id_buku LIKE '%" + caridata + "%' OR judul_buku LIKE '%" + caridata + "%' ORDER BY id_buku ASC";
+            String sql = "SELECT * FROM databuku WHERE id_buku LIKE '%" 
+                    + caridata + "%' OR judul_buku LIKE '%" + caridata + "%' "
+                    + "ORDER BY id_buku ASC";
             Statement stat = conn.createStatement();
             ResultSet hasil = stat.executeQuery(sql);
             while(hasil.next()){
